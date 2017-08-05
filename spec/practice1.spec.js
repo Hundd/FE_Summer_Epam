@@ -63,11 +63,11 @@ describe("Cross lines: ", function() {
         expect(crossLines(0, 0, 6, 0, 1, 1, 1, 3)).toBe(false);
     });
 
-    it("Vertical line with regular line are crossing", function() {
+    it("Vertical line and regular line are crossing", function() {
         expect(crossLines(0, 0, 0, 6, -1, 1, 3, 3)).toBe(true);
     });
 
-    it("Vertical line with regular line are not crossing", function() {
+    it("Vertical line and regular line are not crossing", function() {
         expect(crossLines(0, 0, 0, 6, 1, 1, 3, 3)).toBe(false);
     });
 
