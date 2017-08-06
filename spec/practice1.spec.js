@@ -74,4 +74,12 @@ describe("Cross lines: ", function() {
     it("Horisontal line and regular line are crossing", function() {
         expect(crossLines(0, 0, 6, 0, 0, -2, 6, 2)).toBe(true);
     });
+
+    it("Regular line and short vertical line are not crossing", function() {
+        expect(crossLines(0, 0, 6, 4, 2, 3, 2, 4)).toBe(false);
+    });
+
+    it("Regular line and short horisontal line are not crossing", function() {
+        expect(crossLines(0, 0, 6, 6, 0, 4, 2, 4)).toBe(false);
+    });
 });
