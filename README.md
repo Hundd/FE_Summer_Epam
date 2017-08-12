@@ -1,4 +1,4 @@
-# [Practice](https://github.com/Hundd/FE_Summer_Epam) 
+# [Polchaninov Andrey Epam Training FE Summer](https://github.com/Hundd/FE_Summer_Epam) 
 
 Вариант № 9.
 
