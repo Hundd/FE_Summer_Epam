@@ -5,7 +5,7 @@ var findAverage = require("../src/practice1").findAverage,
     crossLines = require("../src/practice1").crossLines;
 */
 
-describe("Find Average: ", function() {
+describe("Practice 1: Find Average: ", function() {
 
     it("Average 0, 0", function() {
         var result = findAverage(0, 0);
@@ -21,7 +21,7 @@ describe("Find Average: ", function() {
 
 });
 
-describe("Find Some Digits in the number: ", function() {
+describe("Practice 1: Find Some Digits in the number: ", function() {
 
     it("has not 4 or 7", function() {
         expect(findSomeDigits(1235689).itHas4or7).toBe(false);
@@ -45,7 +45,7 @@ describe("Find Some Digits in the number: ", function() {
 
 });
 
-describe("Cross lines: ", function() {
+describe("Practice 1: Cross lines: ", function() {
     it("Regular crossing lines", function() {
         expect(crossLines(0, 0, 5, 5, 0, 5, 5, 0)).toBe(true);
     });

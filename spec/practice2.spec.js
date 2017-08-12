@@ -1,4 +1,4 @@
-describe("Adding two very big numbers", function() {
+describe("Practice 2: Adding two very big numbers", function() {
     it("Function add() should be defined", function() {
         expect(add).toBeDefined();
     });
