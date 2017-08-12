@@ -6,5 +6,5 @@ drafts/
 .vscode/
 
 #files
-*.json*
-.gitignore*
+*.json*/
+.gitignore*/
