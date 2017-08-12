@@ -5,5 +5,5 @@ jspm_packages/
 drafts/
 .vscode/
 
-package.js
-package-lock.js
+*.json
+.gitignore
