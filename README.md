@@ -35,3 +35,6 @@
 * Для заданного времени посчитать угол между стрелками часов - [src/clock.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/clock.js) - покрыто тестами
 
 * Найти сумму всех автоморфных чисел до 10^20 [src/automorph.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/automorph.js)
+
+* Дан массив строк, написать функцию возвращающую  N перестановок данного  массива
+[src/combine.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/combine.js)
