@@ -19,8 +19,10 @@
 
 Дополнительные задачи:
 
-* Реализовать функцию для проверки пин-кода (с помощью замыканий) - [src/pincode.js] (https://github.com/Hundd/FE_Summer_Epam/blob/master/src/pincode.js) - покрыто тестами
+* Реализовать функцию для проверки пин-кода (с помощью замыканий) - 
+[src/pincode.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/pincode.js) - покрыто тестами
 
-* Реализовать функцию (замыкание ?) для игры в крестики нолики - [Крестики/script.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/%D0%9A%D1%80%D0%B5%D1%81%D1%82%D0%B8%D0%BA%D0%B8/script.js). Функция game()
+* Реализовать функцию (замыкание ?) для игры в крестики нолики - 
+[Крестики/script.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/Kresty/script.js). Функция game()
 
-* Для заданного времени посчитать угол между стрелками часов - src/clock.js - покрыто тестами
+* Для заданного времени посчитать угол между стрелками часов - [src/clock.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/clock.js) - покрыто тестами
