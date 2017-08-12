@@ -62,7 +62,6 @@ function crossLines(x1, y1, x2, y2, x3, y3, x4, y4) {
         return false;
     }
     if (isFinite(a1) && isFinite(a2)) {
-        console.log("normal lines");
         //Lines can be described with a canonical solution y = a x + b;
         //Find a common point
         //y = a1 x + b1;
@@ -81,10 +80,6 @@ function crossLines(x1, y1, x2, y2, x3, y3, x4, y4) {
         );
 
     }
-    /*if (dx1 * dy1 === dx2 * dy2) {
-        //Crossing horisontal and vertical lines
-        return true;
-    }*/
 
     // if one of lines is vertical and another is regular
     if (!dx1) {
@@ -98,10 +93,13 @@ function crossLines(x1, y1, x2, y2, x3, y3, x4, y4) {
         y = a1 * x3 + b1;
         return y <= p2YMax && y >= p2YMin;
     }
-
-    console.log("here")
+    //Probably unreachable code but anyway
     return true;
 }
 // console.log(crossLines(0, 0, 6, 4, 2, 3, 2, 4));
 
-module.exports = { findAverage, findSomeDigits, crossLines };
+
+//For NodeJS compatibility
+/*if (module && module.exports) {
+    module.exports = { findAverage, findSomeDigits, crossLines };
+}*/

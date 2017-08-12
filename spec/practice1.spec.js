@@ -1,6 +1,9 @@
-var findAverage = require("../practice1").findAverage,
-    findSomeDigits = require("../practice1").findSomeDigits,
-    crossLines = require("../practice1").crossLines;
+/*
+//NodeJS Stuff
+var findAverage = require("../src/practice1").findAverage,
+    findSomeDigits = require("../src/practice1").findSomeDigits,
+    crossLines = require("../src/practice1").crossLines;
+*/
 
 describe("Find Average: ", function() {
 
