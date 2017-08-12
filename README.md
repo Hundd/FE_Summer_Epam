@@ -1,4 +1,4 @@
-# Practice 
+# [Practice](https://github.com/Hundd/FE_Summer_Epam) 
 
 Вариант № 9.
 
@@ -7,15 +7,18 @@
 Все задания решены.
 Добавил тесты для проверки кода. Использовал рекомендованный Jasmine.
 
-Всё решение заключено в файле src/practice1.js
+Всё решение заключено в файле 
+[src/practice1.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/practice1.js)
 
-Графическое решение задания #3 в файле practice1.jpg.
+Графическое решение задания #3 в файле 
+[practice1.jpg](https://github.com/Hundd/FE_Summer_Epam/blob/master/practice1.img).
 
 Дополнительная задача: Написать игру - еще не решена.
 
 ## Practice 2
 
-Основное задание в файле src/practice2.js
+Основное задание в файле 
+[src/practice2.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/practice2.js)
 
 Дополнительные задачи:
 
@@ -23,6 +26,6 @@
 [src/pincode.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/pincode.js) - покрыто тестами
 
 * Реализовать функцию (замыкание ?) для игры в крестики нолики - 
-[Крестики/script.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/Kresty/script.js). Функция game()
+[Kresty/script.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/Kresty/script.js). Функция game()
 
 * Для заданного времени посчитать угол между стрелками часов - [src/clock.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/clock.js) - покрыто тестами
