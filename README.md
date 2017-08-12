@@ -11,7 +11,7 @@
 [src/practice1.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/practice1.js)
 
 Графическое решение задания #3 в файле 
-[practice1.jpg](https://github.com/Hundd/FE_Summer_Epam/blob/master/practice1.img).
+[practice1.jpg](https://github.com/Hundd/FE_Summer_Epam/blob/master/practice1.jpg).
 
 Дополнительная задача: Написать игру - еще не решена.
 
