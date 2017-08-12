@@ -25,6 +25,10 @@
 * Реализовать функцию для проверки пин-кода (с помощью замыканий) - 
 [src/pincode.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/pincode.js) - покрыто тестами
 
+* Сформировать html код таблицы в строках которой был бы список учеников  а в колонках список предметов с оценками 
+[src/pupils.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/pupils.js) 
+Для запуска скрипта используется [страница](https://github.com/Hundd/FE_Summer_Epam/blob/master/pupils.html) 
+
 * Реализовать функцию (замыкание ?) для игры в крестики нолики - 
 [Kresty/script.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/Kresty/script.js). Функция game()
 
