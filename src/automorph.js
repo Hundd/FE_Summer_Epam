@@ -1,9 +1,7 @@
-//111111111111111201131
 //We will use add() function written in practice2.js task
-//HAPPY CAMPER =)
 //To run this code please open automorph.html file.
 
-var MAX_VALUE = 100000000000000000000; // 10 ^ 20
+const MAX_VALUE = 100000000000000000000; // 10 ^ 20
 const maxPair = "100000000000000000001"; //MAX_VALUE + 1
 
 function prevPair(pair) {
