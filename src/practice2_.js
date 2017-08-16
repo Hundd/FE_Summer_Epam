@@ -2,6 +2,7 @@
 Найти сумму двух сверхбольших целых чисел (больше MAX_SAFE_INTEGER).
 Числа могут быть отрицательными. Для неверно заданных чисел вернуть NaN 
  */
+'use strict';
 
 function add(a, b) {
     if (typeof a === "number" || typeof b === "number") {
@@ -12,8 +13,8 @@ function add(a, b) {
 
     function sum(a, b) {
         //positive a and b;
-        a = a.split("").map(function(s) { return +s }).reverse();
-        b = b.split("").map(function(s) { return +s }).reverse();
+        a = a.split("").map(s => +s).reverse();
+        b = b.split("").map(s => +s).reverse();
         var len = a.length > b.length ? a.length : b.length;
         var c = [];
         var extra = 0;
@@ -28,8 +29,8 @@ function add(a, b) {
 
     function sub(a, b) {
         //a > b;
-        a = a.split("").map(function(s) { return +s }).reverse();
-        b = b.split("").map(function(s) { return +s }).reverse();
+        a = a.split("").map(s => +s).reverse();
+        b = b.split("").map(s => +s).reverse();
         var extra = 0;
         for (var i = 0; i < a.length; i += 1) {
             var current = a[i] - (b[i] ? b[i] : 0) - extra;

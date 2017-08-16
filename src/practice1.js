@@ -94,7 +94,7 @@ function crossLines(x1, y1, x2, y2, x3, y3, x4, y4) {
         return y <= p2YMax && y >= p2YMin;
     }
     //Probably unreachable code but anyway
-    return true;
+    // return true;
 }
 // console.log(crossLines(0, 0, 6, 4, 2, 3, 2, 4));
 
