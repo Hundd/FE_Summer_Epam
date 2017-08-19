@@ -20,7 +20,7 @@
 Основное задание в файле 
 [src/practice2.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/practice2.js)
 
-UPDATE: Подключил blanket и добавил тестов для 100% покрытия. Была ошибка парсинга стрелочных функций x=>+x
+__UPDATE__: Подключил blanket и добавил тестов для 100% покрытия. Была ошибка парсинга стрелочных функций x=>+x
 
 Дополнительные задачи:
 
@@ -29,9 +29,8 @@ UPDATE: Подключил blanket и добавил тестов для 100% п
 
 * Сформировать html код таблицы в строках которой был бы список учеников  а в колонках список предметов с оценками 
 [src/pupils.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/pupils.js) 
-Для запуска скрипта используется [страница](https://github.com/Hundd/FE_Summer_Epam/blob/master/pupils.html) 
-
-UPDATE: Теперь работает с неполными данными об оценках учеников. Если нет оценки - то стоит тире.
+Для запуска скрипта используется [страница](https://github.com/Hundd/FE_Summer_Epam/blob/master/pupils.html). 
+__UPDATE__: Теперь работает с неполными данными об оценках учеников. Если нет оценки - то стоит тире.
 
 * Реализовать функцию (замыкание ?) для игры в крестики нолики - 
 [Kresty/script.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/Kresty/script.js). Функция game()
