@@ -41,3 +41,9 @@ __UPDATE__: Теперь работает с неполными данными �
 
 * Дан массив строк, написать функцию возвращающую  N перестановок данного  массива
 [src/combine.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/combine.js)
+
+## Practice 3
+
+Основное задание в файле 
+[src/practice3.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/practice3.js)
+Для запуска скрипта используется [practice3.html](https://github.com/Hundd/FE_Summer_Epam/blob/master/practice3.html). 
