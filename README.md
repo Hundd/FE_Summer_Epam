@@ -49,5 +49,5 @@ __UPDATE__: Теперь работает с неполными данными �
 Для запуска скрипта используется [practice3.html](https://github.com/Hundd/FE_Summer_Epam/blob/master/practice3.html). 
 
 Дополнительное задание: Реализовать приложение для построения графика функции
-[src/practice3_graphic.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/practice3_graphic.js)
-Для запуска скрипта используется [practice3_graphic.html](https://github.com/Hundd/FE_Summer_Epam/blob/master/practice3_graphic.html). 
+[src/practice3_graphic.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/Practice3_graphic.js)
+Для запуска скрипта используется [practice3_graphic.html](https://github.com/Hundd/FE_Summer_Epam/blob/master/Practice3_graphic.html). 
