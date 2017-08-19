@@ -1,0 +1,36 @@
+<!dotype html>
+<html>
+
+<head>
+    <title>Draw the graph of the function</title>
+    <meta charset="utf-8">
+    <script src="src/Practice3_graphic.js" defer></script>
+    <link rel="stylesheet" href="css/Practice3_graphic.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Graphics on Canvas</h1>
+        <form id="functions">
+            <div id="formula-container"></div>
+            <input type="submit" value="Draw" class="btn-big">
+            <input type="button" value="Add Another Function" id="addFunction" class="btn-big">
+        </form>
+
+        <hr/>
+        <form action="#" id="limits">
+            <label for="xMin">xMin:</label>
+            <input type="number" name="xMin" id="xMin" value="-6.28" step=0.01>
+            <label for="xMax">xMax:</label>
+            <input type="number" name="xMax" id="xMax" value="6.28" step=0.01>
+            <label for="totalPoints">total points:</label>
+            <input type="number" name="totalPoints" id="totalPoints" value="1000" step=10 min="10" max="10000">
+            <input type="submit" value="Apply">
+        </form>
+        <hr/>
+        <canvas id="canvas" width="1024" height="768"></canvas>
+    </div>
+
+</body>
+
+</html>
