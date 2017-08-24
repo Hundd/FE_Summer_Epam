@@ -17,6 +17,7 @@ var f1 = Math.sin;
 var f2 = function(x) { return Math.sin(2 * x); };
 var f3 = function(x) { return -Math.cos(4 * x) / 4; };
 var startExpression = "cos(x) - cos(3*x)/3 + cos(5*x)/5 - cos(7*x)/7 + cos(9*x)/9 - cos(11*x)/11";
+// var startExpression = "sqrt(x)";
 var totalPoints = 1000;
 var yLimit = 1; //
 var numberOfFunction = 0;
@@ -43,20 +44,35 @@ var points;
 function calcPoints(funcs, xMin, xMax) {
     var dx = (xMax - xMin) / totalPoints;
 
-    var realPoints = funcs.map((f) => {
+    var realPoints = funcs.map(function(f) {
         var dotsReal = [];
         for (var px = xMin; px <= xMax; px += dx) {
             dotsReal.push(-f.function(px));
         }
         return dotsReal;
     });
+    console.log(realPoints);
 
-    yMax = Math.max(...realPoints.map(p => Math.max(...p)));
-    yMin = Math.min(...realPoints.map(p => Math.min(...p)));
+    //yMax = Math.max(...realPoints.map(p => Math.max(...p)));
+    //yMin = Math.min(...realPoints.map(p => Math.min(...p)));
+
+    yMax = Number.NEGATIVE_INFINITY;
+    yMin = Number.POSITIVE_INFINITY;
+    realPoints.forEach(function(row) {
+        row.forEach(function(val) {
+            if (val > yMax) {
+                yMax = val;
+            }
+            if (val < yMin) {
+                yMin = val;
+            }
+        });
+    });
+
     scale = canvas.height * yLimit / (yMax - yMin);
     offset = canvas.height / 2 + canvas.height / 2 * (yMin + yMax) / (yMin - yMax); //768
     return realPoints
-        .map(points => {
+        .map(function(points) {
             return points.map((y, i) => {
                 return y * scale + offset;
             });
@@ -68,12 +84,12 @@ function drawPoints(points) {
     var dxCanvas = canvas.width / totalPoints;
     c.clearRect(0, 0, canvas.width, canvas.height);
 
-    points.forEach((row, i) => {
+    points.forEach(function(row, i) {
         c.beginPath();
         c.strokeStyle = funcs[i].color;
         c.lineWidth = funcs[i].width;
         row.forEach(function(dot, i) {
-            if (i === 0) {
+            if (i === 0 || !isFinite(dot)) {
                 c.moveTo(i * dxCanvas, dot);
             } else {
                 c.lineTo(i * dxCanvas, dot);
@@ -163,6 +179,7 @@ function addNewFunction() {
 
 var functionsForm = document.getElementById("functions");
 functionsForm.addEventListener("submit", function(e) {
+    // console.log(new FormData(functionsForm).getAll());
     e.preventDefault();
     funcs = [];
     funcIDs.forEach(i => {
