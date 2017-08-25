@@ -15,7 +15,7 @@ request.get("http://epam-ajax-test-e-walker.c9users.io:8080/api/tables/foo", fun
 var form = {
     name: "sqrt3",
     graph_function: "sqrt(x)",
-    min_x: -3,
+    min_x: 0,
     max_x: 4,
     color: "red"
 };
@@ -27,7 +27,7 @@ request.post({
     form: {
         name: "sqrt",
         graph_function: "sqrt(x)",
-        min_x: -3,
+        min_x: 0,
         max_x: 4,
         color: "green"
     }
@@ -42,8 +42,8 @@ request.post({
     form: {
         name: "sin2x",
         graph_function: "sin(2*x)",
-        min_x: -3,
-        max_x: 4,
+        min_x: -5,
+        max_x: 5,
         color: "blue"
     }
 }, function(err, res) {
@@ -57,8 +57,8 @@ request.post({
     form: {
         name: "sin",
         graph_function: "sin(x)",
-        min_x: -3,
-        max_x: 4,
+        min_x: -6,
+        max_x: 6,
         color: "gray"
     }
 }, function(err, res) {
@@ -72,8 +72,8 @@ request.post({
     form: {
         name: "cos",
         graph_function: "cos(x)",
-        min_x: -3,
-        max_x: 4,
+        min_x: -7,
+        max_x: 7,
         color: "red"
     }
 }, function(err, res) {

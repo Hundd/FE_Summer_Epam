@@ -198,6 +198,10 @@ var functionsForm = document.getElementById("functions");
 functionsForm.addEventListener("submit", function(e) {
     // console.log(new FormData(functionsForm).getAll());
     e.preventDefault();
+    renderView();
+});
+
+function renderView() {
     funcs = [];
     funcIDs.forEach(i => {
         var funcElement = document.getElementById("function" + i);
@@ -214,28 +218,12 @@ functionsForm.addEventListener("submit", function(e) {
             funcElement.classList.add("error");
         }
     });
-    //console.log(funcs);
-
+    getLimitValues();
     drawPoints(calcPoints(funcs, xMin, xMax));
     drawGrid();
+}
 
-});
-
-//Delete functions
-functionsForm.addEventListener("click", function(e) {
-    if (e.target.id.indexOf("del") === 0) {
-        var id = e.target.id.slice(3);
-        var deleted = document.getElementById("formula-row" + id);
-        deleted.remove();
-        numberOfFunction -= 1;
-        var index = funcIDs.indexOf(+id)
-        funcIDs.splice(index, 1);
-    }
-});
-
-
-document.getElementById("limits").addEventListener("submit", function(e) {
-    e.preventDefault();
+function getLimitValues() {
     var min = document.getElementById("xMin");
     var max = document.getElementById("xMax");
     var points = document.getElementById("totalPoints");
@@ -253,17 +241,34 @@ document.getElementById("limits").addEventListener("submit", function(e) {
         max.classList.add("error");
         alert("Left value has to be less than right")
     }
-    drawPoints(calcPoints(funcs, xMin, xMax));
-    drawGrid();
+}
+
+//Delete functions
+functionsForm.addEventListener("click", function(e) {
+    if (e.target.id.indexOf("del") === 0) {
+        var id = e.target.id.slice(3);
+        var deleted = document.getElementById("formula-row" + id);
+        deleted.remove();
+        numberOfFunction -= 1;
+        var index = funcIDs.indexOf(+id)
+        funcIDs.splice(index, 1);
+    }
+});
+
+
+document.getElementById("limits").addEventListener("submit", function(e) {
+    e.preventDefault();
+    getLimitValues();
+    renderView();
 });
 
 /// Adding Server Communication \\\
-var host = "http://localhost:3000/";
+var HOST = "http://localHOST:3000/";
 
 function fetchFunctionsfromServer() {
     return new Promise(function(resolve, reject) {
         var request = new XMLHttpRequest();
-        request.open("GET", host + "api/functions");
+        request.open("GET", HOST + "api/functions");
         request.onreadystatechange = function() {
             if (request.readyState === 4 && request.status === 200) {
                 try {
@@ -331,19 +336,29 @@ function addHandlers() {
     //Code should be executed only once
     if (handlersAdded) return;
     handlersAdded = true;
+    //Add handler for parent element, so we will not care if children will be changed
     document.querySelector("#saved").addEventListener("click", function(e) {
+
+        //Add item into display list
         var add = e.target.className.match(/btn-add(\d+)/);
         if (add) {
+            var f = savedFunctions[add[1]];
             formulaContainer.appendChild(
-                addNewFunction(savedFunctions[add[1]].graphFunction, savedFunctions[add[1]].graphColor)
+                addNewFunction(f.graphFunction, f.graphColor)
             );
+            //If there are no functions to display we set new limits
+            if (funcs.length === 0) {
+                updateLimits(f.minX, f.maxX);
+            }
+
+            renderView();
         }
-        var del = e.target.className.match(/btn-del(\d+)/);
 
         //Delete Items from the server
+        var del = e.target.className.match(/btn-del(\d+)/);
         if (del) {
             var request = new XMLHttpRequest();
-            request.open("DELETE", host + 'api/functions/function');
+            request.open("DELETE", HOST + 'api/functions/function');
             request.onreadystatechange = function() {
                 if (request.readyState === 4 && request.status === 200) {
                     console.log(request.responseText);
@@ -359,20 +374,10 @@ function addHandlers() {
     });
 }
 
-/*
-function addHandlers(functions) {
-    functions.forEach(function(f, i) {
-        document.querySelectorAll(".btn-add" + i)
-            .forEach(function(el) {
-                //Add the Function to the display list
-                el.addEventListener("click", function(e) {
-                    formulaContainer.appendChild(addNewFunction(functions[i].graphFunction));
-                    console.log(functions[i].graphFunction);
-                });
-            });
-        document.querySelector("#btn-del" + i).addEventListener("click", function(e) {
-            //Remove function from Server
-            console.log("del:", i);
-        })
-    });
-};*/
+function updateLimits(xmin, xmax) {
+    if (xmin >= xmax) return;
+    xMin = xmin;
+    xMax = xmax;
+    document.getElementById("xMin").value = xmin;
+    document.getElementById("xMax").value = xmax;
+}
