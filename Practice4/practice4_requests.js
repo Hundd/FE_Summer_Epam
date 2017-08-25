@@ -2,6 +2,8 @@ const url1 = "http://epam-ajax-test-e-walker.c9users.io:8080";
 const url2 = "/api/tables/foo";
 const url = require("url");
 const request = require("request");
+var postURL = "http://localhost:3000/api/functions/";
+// var postURL = "http://epam-js-sommer2017.eu-4.evennode.com/api/functions";
 /*
 request.get("http://epam-ajax-test-e-walker.c9users.io:8080/api/tables/foo", function(err, res) {
     console.log(res.body);
@@ -23,7 +25,7 @@ var form = {
 
 
 request.post({
-    url: "http://localhost:3000/api/functions/",
+    url: postURL,
     form: {
         name: "sqrt",
         graph_function: "sqrt(x)",
@@ -38,7 +40,7 @@ request.post({
     console.log(res.body);
 });
 request.post({
-    url: "http://localhost:3000/api/functions/",
+    url: postURL,
     form: {
         name: "sin2x",
         graph_function: "sin(2*x)",
@@ -53,7 +55,7 @@ request.post({
     console.log(res.body);
 });
 request.post({
-    url: "http://localhost:3000/api/functions/",
+    url: postURL,
     form: {
         name: "sin",
         graph_function: "sin(x)",
@@ -68,7 +70,7 @@ request.post({
     console.log(res.body);
 });
 request.post({
-    url: "http://localhost:3000/api/functions/",
+    url: postURL,
     form: {
         name: "cos",
         graph_function: "cos(x)",

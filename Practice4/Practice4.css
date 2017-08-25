@@ -24,6 +24,14 @@
     width: 700px;
 }
 
+.formula-row input[type=number] {
+    width: 100px;
+}
+
+.formula-row input.func-name {
+    width: 200px;
+}
+
 .btn-big {
     background-color: darkgrey;
     padding: 10px;

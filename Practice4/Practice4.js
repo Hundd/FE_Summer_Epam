@@ -7,6 +7,8 @@
 - поля для задания цвета и толщины графика функции (вид по желанию)
 кнопка + для добавления нового графика функции 
 */
+// var HOST = "http://localhost:3000/";
+var HOST = "http://epam-js-sommer2017.eu-4.evennode.com/";
 var canvas = document.getElementById("canvas");
 var c = canvas.getContext("2d");
 var xMin = -3.14159 * 2;
@@ -34,6 +36,11 @@ function calcPoints(funcs, xMin, xMax) {
     var realPoints = funcs.map(function(f) {
         var dotsReal = [];
         for (var px = xMin; px <= xMax; px += dx) {
+            //For dots that are not in the range
+            if (px < f.minX || px > f.maxX) {
+                dotsReal.push(NaN);
+                continue;
+            }
             dotsReal.push(-f.function(px));
         }
         return dotsReal;
@@ -150,11 +157,17 @@ drawGrid();
 
 var formulaContainer = document.getElementById("formula-container");
 
-function addFormulaHTML(id, f = "cos(x)", color = "black") {
+function addFormulaHTML(id, f = {}) {
+    var func = f.graphFunction || "cos(x)";
+    var color = f.graphColor || "blue";
+    var _id = f._id || "0";
+    var min = f.graphName ? f.minX : xMin;
+    var max = f.graphName ? f.maxX : xMax;
+    var name = f.graphName || "";
     return `
     <input type="button" value="X" id="del${id}">
     <label>y${id}=</label>
-    <input type="text" value="${f}" id="function${id}">
+    <input type="text" value="${func}" id="function${id}" data-id="${_id}">
     <select id="color${id}">
         <option value="black" ${color==="black"?"selected":""}>Black</optiov>
         <option value="red" ${color==="red"?"selected":""}>Red</optiov>
@@ -169,24 +182,31 @@ function addFormulaHTML(id, f = "cos(x)", color = "black") {
         <option value="4">4px</optiov>
         <option value="5">5px</optiov>
     </select>
-    <input type="button" value="Save" id="save${id}">
-        <br/>`
+    <br/>
+    <label for="xMin${id}">xMin:</label>
+    <input type="number" name="xMin" id="xMin${id}" value="${min}" step=0.000001>
+    <label for="xMax${id}">xMax:</label>
+    <input type="number" name="xMax" id="xMax${id}" value="${max}" step=0.000001>
+    <label for="func-name${id}">Name:</label>
+    <input type="text" name="name" id="func-name${id}" class="func-name" value="${name}">
+    <input type="button" value="${_id==='0'?'Save':'Update'}" id="save${id}">
+    <hr/>
+    <br/>`
 
 }
 
 var addFunction = document.getElementById("addFunction");
 
-/*formulaContainer.appendChild(addNewFunction());
-document.getElementById("function0").value = startExpression;*/
+
 
 addFunction.addEventListener("click", function(e) {
     e.preventDefault();
     formulaContainer.appendChild(addNewFunction());
 });
 
-function addNewFunction(f, color) {
+function addNewFunction(f) {
     var div = document.createElement("div");
-    div.innerHTML = addFormulaHTML(numberOfFunction, f, color);
+    div.innerHTML = addFormulaHTML(numberOfFunction, f);
     div.id = "formula-row" + numberOfFunction;
     div.classList.add("formula-row");
     funcIDs.push(numberOfFunction);
@@ -196,50 +216,69 @@ function addNewFunction(f, color) {
 
 var functionsForm = document.getElementById("functions");
 functionsForm.addEventListener("submit", function(e) {
-    // console.log(new FormData(functionsForm).getAll());
     e.preventDefault();
     renderView();
 });
 
+
+
 function renderView() {
+    parseFunctionsForm();
+
+    drawPoints(calcPoints(funcs, xMin, xMax));
+    drawGrid();
+}
+
+function parseFunctionsForm() {
+    //Reset limits
+    xMax = Number.NEGATIVE_INFINITY;
+    xMin = Number.POSITIVE_INFINITY;
     funcs = [];
     funcIDs.forEach(i => {
         var funcElement = document.getElementById("function" + i);
         var func = parseFunction(funcElement.value);
-        // console.log(func);
         if (func) {
+            var minX = document.getElementById("xMin" + i).value || 0;
+            var maxX = document.getElementById("xMax" + i).value || 0;
+            if (!checkLimitValues(i)) return;
+            updateLimits(minX, maxX);
+            //console.log(xMin, xMax)
             funcs.push({
                 function: func,
+                functionExpression: funcElement.value,
                 color: document.getElementById("color" + i).value,
-                width: document.getElementById("width" + i).value
+                width: document.getElementById("width" + i).value,
+                minX: minX,
+                maxX: maxX,
+                _id: funcElement.getAttribute("data-id"),
+                name: document.getElementById("func-name" + i).value
             });
             funcElement.classList.remove("error");
         } else {
             funcElement.classList.add("error");
         }
     });
-    getLimitValues();
-    drawPoints(calcPoints(funcs, xMin, xMax));
-    drawGrid();
+    if (!isFinite(xMax)) xMax = 10;
+    if (!isFinite(xMin)) xMin = -10;
 }
 
-function getLimitValues() {
-    var min = document.getElementById("xMin");
-    var max = document.getElementById("xMax");
-    var points = document.getElementById("totalPoints");
-    totalPoints = parseInt(points.value);
+function checkLimitValues(i) {
 
+    var min = document.getElementById("xMin" + i);
+    var max = document.getElementById("xMax" + i);
     var minv = parseFloat(min.value)
     var maxv = parseFloat(max.value)
     if (minv < maxv) {
-        xMin = minv;
-        xMax = maxv;
+        /*xMin = minv;
+        xMax = maxv;*/
         min.classList.remove("error");
         max.classList.remove("error");
+        return true;
     } else {
         min.classList.add("error");
         max.classList.add("error");
-        alert("Left value has to be less than right")
+        // alert("Left value has to be less than right");
+        return false;
     }
 }
 
@@ -263,7 +302,7 @@ document.getElementById("limits").addEventListener("submit", function(e) {
 });
 
 /// Adding Server Communication \\\
-var HOST = "http://localHOST:3000/";
+
 
 function fetchFunctionsfromServer() {
     return new Promise(function(resolve, reject) {
@@ -279,7 +318,8 @@ function fetchFunctionsfromServer() {
                     reject("Server response is not correct");
                 }
             } else if (request.status = 404) {
-                document.getElementById("saved").innerHTML = "<h2 class='error'>There is no functions on the server</h2>";
+                document.getElementById("saved").innerHTML = "<h2 class='error'>There is no functions on the server</h2>" +
+                    "<p class='error'>" + request.responseText + "</p>";
             }
         }
         request.onerror = function() {
@@ -344,12 +384,10 @@ function addHandlers() {
         if (add) {
             var f = savedFunctions[add[1]];
             formulaContainer.appendChild(
-                addNewFunction(f.graphFunction, f.graphColor)
+                addNewFunction(f)
             );
             //If there are no functions to display we set new limits
-            if (funcs.length === 0) {
-                updateLimits(f.minX, f.maxX);
-            }
+            updateLimits(f.minX, f.maxX, funcs.length === 0);
 
             renderView();
         }
@@ -372,12 +410,77 @@ function addHandlers() {
             request.send("function_id=" + savedFunctions[del[1]]._id);
         }
     });
+
+
 }
 
-function updateLimits(xmin, xmax) {
-    if (xmin >= xmax) return;
-    xMin = xmin;
-    xMax = xmax;
-    document.getElementById("xMin").value = xmin;
-    document.getElementById("xMax").value = xmax;
+function updateLimits(xmin, xmax, setNew) {
+    xmin = +xmin;
+    xmax = +xmax;
+    if (xmin >= xmax) return 1;
+    if (setNew) {
+        document.getElementById("xMin").value = xMin = xmin;
+        document.getElementById("xMax").value = xMax = xmax;
+    } else {
+        if (xmin < xMin) {
+            document.getElementById("xMin").value = xMin = xmin;
+        }
+        if (xmax > xMax) {
+            document.getElementById("xMax").value = xMax = xmax;
+        }
+    }
+    return 0;
 }
+
+//Add handlers for Save Buttons
+functionsForm.addEventListener("click", function(e) {
+    function encodeJSON(data) {
+        return Object.keys(data)
+            .map(function(key) {
+                return "" + key + "=" + encodeURIComponent(data[key]);
+            })
+            .join("&");
+    }
+    // console.log(new FormData(functionsForm).getAll());
+    var id = e.target.id.match(/save(\d+)/);
+    if (id) {
+        e.preventDefault();
+        id = id[1];
+        parseFunctionsForm();
+        var f = funcs[id]
+        if (f) {
+            // POST new function
+            if (!f.name) {
+                document.getElementById("func-name" + id).classList.add("error");
+                return;
+            }
+            document.getElementById("func-name" + id).classList.remove("error");
+            var data = {
+                name: f.name,
+                graph_function: f.functionExpression,
+                min_x: f.minX,
+                max_x: f.maxX,
+                color: f.color
+            };
+            // Save or Update Data
+            var request = new XMLHttpRequest();
+            if (f._id === "0") {
+                request.open("POST", HOST + "api/functions/");
+            } else {
+                request.open("PUT", HOST + "api/functions/function/" + f._id);
+            }
+            request.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+            request.onreadystatechange = function() {
+                if (request.readyState === 4 && request.status === 200) {
+                    var new_id = JSON.parse(request.responseText).record_id;
+                    refreshServerData();
+                    f._id = new_id;
+                    document.getElementById("function" + id).setAttribute("data-id", new_id);
+                    e.target.value = "Update";
+                    renderView();
+                }
+            };
+            request.send(encodeJSON(data));
+        }
+    }
+});
