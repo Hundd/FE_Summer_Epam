@@ -44,10 +44,10 @@ __UPDATE__: Теперь работает с неполными данными �
 
 ## Practice 3
 
-[Основное задание](http://hundd.cc.ua/web/epam/practice3.html) в файле 
-[src/practice3.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/practice3.js)
-Для запуска скрипта используется [practice3.html](https://github.com/Hundd/FE_Summer_Epam/blob/master/practice3.html). 
+[Основное задание](https://github.com/Hundd/FE_Summer_Epam/tree/master/Practice3) 
 
-[Дополнительное задание](http://hundd.cc.ua/web/epam/Practice3_graphic.html): Реализовать приложение для построения графика функции
-[src/practice3_graphic.js](https://github.com/Hundd/FE_Summer_Epam/blob/master/src/Practice3_graphic.js)
-Для запуска скрипта используется [practice3_graphic.html](https://github.com/Hundd/FE_Summer_Epam/blob/master/Practice3_graphic.html). 
+[Дополнительное задание](https://github.com/Hundd/FE_Summer_Epam/tree/master/Practice3%20Graphic): Реализовать приложение для построения графика функции
+
+## Practice 3 
+
+[Основное задание](https://github.com/Hundd/FE_Summer_Epam/tree/master/Practice4) 
