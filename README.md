@@ -48,6 +48,6 @@ __UPDATE__: Теперь работает с неполными данными �
 
 [Дополнительное задание](https://github.com/Hundd/FE_Summer_Epam/tree/master/Practice3%20Graphic): Реализовать приложение для построения графика функции
 
-## Practice 3 
+## Practice 4
 
 [Основное задание](https://github.com/Hundd/FE_Summer_Epam/tree/master/Practice4) 
