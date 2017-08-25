@@ -13,27 +13,92 @@ request.get("http://epam-ajax-test-e-walker.c9users.io:8080/api/tables/foo", fun
     console.log(res.body);
 });*/
 var form = {
-    name: "sqrt",
+    name: "sqrt3",
     graph_function: "sqrt(x)",
     min_x: -3,
     max_x: 4,
     color: "red"
 };
 /* */
+
+
 request.post({
     url: "http://localhost:3000/api/functions/",
-    form: form
+    form: {
+        name: "sqrt",
+        graph_function: "sqrt(x)",
+        min_x: -3,
+        max_x: 4,
+        color: "green"
+    }
 }, function(err, res) {
     if (err) {
         console.log(err.message);
     }
     console.log(res.body);
 });
+request.post({
+    url: "http://localhost:3000/api/functions/",
+    form: {
+        name: "sin2x",
+        graph_function: "sin(2*x)",
+        min_x: -3,
+        max_x: 4,
+        color: "blue"
+    }
+}, function(err, res) {
+    if (err) {
+        console.log(err.message);
+    }
+    console.log(res.body);
+});
+request.post({
+    url: "http://localhost:3000/api/functions/",
+    form: {
+        name: "sin",
+        graph_function: "sin(x)",
+        min_x: -3,
+        max_x: 4,
+        color: "gray"
+    }
+}, function(err, res) {
+    if (err) {
+        console.log(err.message);
+    }
+    console.log(res.body);
+});
+request.post({
+    url: "http://localhost:3000/api/functions/",
+    form: {
+        name: "cos",
+        graph_function: "cos(x)",
+        min_x: -3,
+        max_x: 4,
+        color: "red"
+    }
+}, function(err, res) {
+    if (err) {
+        console.log(err.message);
+    }
+    console.log(res.body);
+});
+
 /**/
 /*
 request.put({
     url: "http://localhost:3000/api/functions/function/599ea58e22d21f03f422d1c4",
     form: form
+}, function(err, res) {
+    if (err) {
+        console.log(err.message);
+    }
+    console.log(res.body);
+})*/
+
+/*
+request.delete({
+    url: "http://localhost:3000/api/functions/function",
+    form: { function_id: "599ea58e22d21f03f422d1c4" }
 }, function(err, res) {
     if (err) {
         console.log(err.message);

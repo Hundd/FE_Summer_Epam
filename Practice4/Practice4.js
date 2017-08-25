@@ -9,35 +9,22 @@
 */
 var canvas = document.getElementById("canvas");
 var c = canvas.getContext("2d");
-c.scale(1, 1)
 var xMin = -3.14159 * 2;
 var xMax = 3.14159 * 2;
 var yMin, yMax, scale, offset;
-var f1 = Math.sin;
-var f2 = function(x) { return Math.sin(2 * x); };
-var f3 = function(x) { return -Math.cos(4 * x) / 4; };
 var startExpression = "cos(x) - cos(3*x)/3 + cos(5*x)/5 - cos(7*x)/7 + cos(9*x)/9 - cos(11*x)/11";
 // var startExpression = "sqrt(x)";
 var totalPoints = 1000;
 var yLimit = 1; //
 var numberOfFunction = 0;
+var savedFunctions;
 var funcIDs = [];
 var funcs = [
     /*{
-        function: f1,
-        color: "red",
-        width: 4
-    },*/
-    {
         function: parseFunction(startExpression),
         color: "black",
         width: 1
-    },
-    /* {
-        function: f3,
-        color: "green",
-        width: 2
-    }*/
+    }, */
 ];
 var points;
 
@@ -99,7 +86,7 @@ function drawPoints(points) {
         c.stroke();
     });
 }
-drawPoints(calcPoints(funcs, xMin, xMax));
+
 
 function drawGrid() {
     var NUMBER_OF_LINES = 10;
@@ -130,6 +117,32 @@ function drawGrid() {
         }
     }
 }
+
+
+function parseFunction(expr) {
+    try {
+        var matched = expr.match(/\w{2,4}/g);
+        var uniqMatched = {};
+        if (matched)
+            matched.forEach(f => uniqMatched[f] = true);
+        Object.keys(uniqMatched).forEach(function(f) {
+            if (f in Math) {
+                expr = expr.replace(RegExp(f, "g"), "Math." + f);
+            }
+        });
+        var x = 3.14159;
+        var f = new Function("x", "return " + expr);
+        f(x);
+
+    } catch (e) {
+        console.log(e.message)
+        f = null;
+    } finally {
+        return f;
+    }
+}
+
+drawPoints(calcPoints(funcs, xMin, xMax));
 drawGrid();
 
 ///// HTML Block \\\\\
@@ -137,40 +150,43 @@ drawGrid();
 
 var formulaContainer = document.getElementById("formula-container");
 
-function addFormulaHTML(id, f = "cos(x)") {
+function addFormulaHTML(id, f = "cos(x)", color = "black") {
     return `
-        <label>y${id}=</label>
-        <input type="text" value=${f} id="function${id}">
-        <select id="color${id}">
-            <option value="black">Black</optiov>
-            <option value="red">Red</optiov>
-            <option value="blue">Blue</optiov>
-            <option value="green">Green</optiov>
-            <option value="gray">Gray</optiov>
-        </select>
-        <select id="width${id}">
-            <option value="1">1px</optiov>
-            <option value="2">2px</optiov>
-            <option value="3">3px</optiov>
-            <option value="4">4px</optiov>
-            <option value="5">5px</optiov>
-        </select>
-        <input type="button" value="X" id="del${id}">
+    <input type="button" value="X" id="del${id}">
+    <label>y${id}=</label>
+    <input type="text" value="${f}" id="function${id}">
+    <select id="color${id}">
+        <option value="black" ${color==="black"?"selected":""}>Black</optiov>
+        <option value="red" ${color==="red"?"selected":""}>Red</optiov>
+        <option value="blue" ${color==="blue"?"selected":""}>Blue</optiov>
+        <option value="green" ${color==="green"?"selected":""}>Green</optiov>
+        <option value="gray" ${color==="gray"?"selected":""}>Gray</optiov>
+    </select>
+    <select id="width${id}">
+        <option value="1">1px</optiov>
+        <option value="2">2px</optiov>
+        <option value="3" selected>3px</optiov>
+        <option value="4">4px</optiov>
+        <option value="5">5px</optiov>
+    </select>
+    <input type="button" value="Save" id="save${id}">
         <br/>`
 
 }
 
 var addFunction = document.getElementById("addFunction");
-formulaContainer.appendChild(addNewFunction());
-document.getElementById("function0").value = startExpression;
+
+/*formulaContainer.appendChild(addNewFunction());
+document.getElementById("function0").value = startExpression;*/
+
 addFunction.addEventListener("click", function(e) {
     e.preventDefault();
     formulaContainer.appendChild(addNewFunction());
 });
 
-function addNewFunction() {
+function addNewFunction(f, color) {
     var div = document.createElement("div");
-    div.innerHTML = addFormulaHTML(numberOfFunction);
+    div.innerHTML = addFormulaHTML(numberOfFunction, f, color);
     div.id = "formula-row" + numberOfFunction;
     div.classList.add("formula-row");
     funcIDs.push(numberOfFunction);
@@ -241,25 +257,122 @@ document.getElementById("limits").addEventListener("submit", function(e) {
     drawGrid();
 });
 
-function parseFunction(expr) {
-    try {
-        var matched = expr.match(/\w{2,4}/g);
-        var uniqMatched = {};
-        if (matched)
-            matched.forEach(f => uniqMatched[f] = true);
-        Object.keys(uniqMatched).forEach(function(f) {
-            if (f in Math) {
-                expr = expr.replace(RegExp(f, "g"), "Math." + f);
-            }
-        });
-        var x = 3.14159;
-        var f = new Function("x", "return " + expr);
-        f(x);
+/// Adding Server Communication \\\
+var host = "http://localhost:3000/";
 
-    } catch (e) {
-        console.log(e.message)
-        f = null;
-    } finally {
-        return f;
-    }
+function fetchFunctionsfromServer() {
+    return new Promise(function(resolve, reject) {
+        var request = new XMLHttpRequest();
+        request.open("GET", host + "api/functions");
+        request.onreadystatechange = function() {
+            if (request.readyState === 4 && request.status === 200) {
+                try {
+                    var functions = JSON.parse(request.responseText);
+                    savedFunctions = functions;
+                    resolve(functions);
+                } catch (e) {
+                    reject("Server response is not correct");
+                }
+            } else if (request.status = 404) {
+                document.getElementById("saved").innerHTML = "<h2 class='error'>There is no functions on the server</h2>";
+            }
+        }
+        request.onerror = function() {
+            reject("Can not reach the server!");
+        }
+        request.send(null);
+    });
 }
+
+function refreshServerData() {
+    fetchFunctionsfromServer()
+        .then(renderFunctionsList)
+        .then(addHandlers)
+        .catch(function(e) {
+            console.log(e);
+        });
+}
+refreshServerData();
+
+
+function renderFunctionsList(functions) {
+    var savedElement = document.getElementById("saved");
+    var content =
+        functions.reduce(function(a, f, i) {
+            return a + `
+                <tr>
+                    <td class="btn-del btn-del${i}">X</td>
+                    <td class="btn-add${i}">${f.graphName}</td>
+                    <td class="btn-add${i}">${f.graphFunction}</td>
+                    <td class="btn-add${i}">${f.minX}</td>
+                    <td class="btn-add${i}">${f.maxX}</td>
+                    <td class="btn-add${i}">${f.graphColor}</td>
+                </tr>
+            `;
+        }, "");
+    savedElement.innerHTML = `<table class="func-table">
+    <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Function</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Color</th>
+    </tr>
+    ${content}
+</table>`;
+    return Promise.resolve(functions);
+}
+
+//Placing Event Handlers for fetched functions
+var handlersAdded = false;
+
+function addHandlers() {
+    //Code should be executed only once
+    if (handlersAdded) return;
+    handlersAdded = true;
+    document.querySelector("#saved").addEventListener("click", function(e) {
+        var add = e.target.className.match(/btn-add(\d+)/);
+        if (add) {
+            formulaContainer.appendChild(
+                addNewFunction(savedFunctions[add[1]].graphFunction, savedFunctions[add[1]].graphColor)
+            );
+        }
+        var del = e.target.className.match(/btn-del(\d+)/);
+
+        //Delete Items from the server
+        if (del) {
+            var request = new XMLHttpRequest();
+            request.open("DELETE", host + 'api/functions/function');
+            request.onreadystatechange = function() {
+                if (request.readyState === 4 && request.status === 200) {
+                    console.log(request.responseText);
+                    refreshServerData();
+                } else if (request.status = 404) {
+                    document.getElementById("saved").innerHTML = "<h2 class='error'>There is no functions on the server</h2>";
+                }
+            }
+            console.log("function_id=" + savedFunctions[del[1]]._id);
+            request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.send("function_id=" + savedFunctions[del[1]]._id);
+        }
+    });
+}
+
+/*
+function addHandlers(functions) {
+    functions.forEach(function(f, i) {
+        document.querySelectorAll(".btn-add" + i)
+            .forEach(function(el) {
+                //Add the Function to the display list
+                el.addEventListener("click", function(e) {
+                    formulaContainer.appendChild(addNewFunction(functions[i].graphFunction));
+                    console.log(functions[i].graphFunction);
+                });
+            });
+        document.querySelector("#btn-del" + i).addEventListener("click", function(e) {
+            //Remove function from Server
+            console.log("del:", i);
+        })
+    });
+};*/
