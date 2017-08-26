@@ -1,27 +1,14 @@
-const url1 = "http://epam-ajax-test-e-walker.c9users.io:8080";
-const url2 = "/api/tables/foo";
 const url = require("url");
 const request = require("request");
-var postURL = "http://localhost:3000/api/functions/";
-// var postURL = "http://epam-js-sommer2017.eu-4.evennode.com/api/functions";
-/*
-request.get("http://epam-ajax-test-e-walker.c9users.io:8080/api/tables/foo", function(err, res) {
-    console.log(res.body);
-});*/
+var HOST = "http://epam-js-sommer2017.eu-4.evennode.com/";
+var postURL = HOST + "api/functions/";
+
 /*request.get("http://localhost:3000/api", function(err, res) {
     if (err) {
         console.log(err.message);
     }
     console.log(res.body);
 });*/
-var form = {
-    name: "sqrt3",
-    graph_function: "sqrt(x)",
-    min_x: 0,
-    max_x: 4,
-    color: "red"
-};
-/* */
 
 
 request.post({
@@ -69,6 +56,7 @@ request.post({
     }
     console.log(res.body);
 });
+
 request.post({
     url: postURL,
     form: {
@@ -84,6 +72,100 @@ request.post({
     }
     console.log(res.body);
 });
+///MOC DATA 
+request.post({
+    url: postURL,
+    form: {
+        name: "meander radio",
+        graph_function: "(cos(x) - cos(3*x)/3 + cos(5*x)/5 - cos(7*x)/7 + cos(9*x)/9 - cos(11*x)/11 +5)*cos(30*x)",
+        min_x: -7,
+        max_x: 7,
+        color: "red"
+    }
+}, function(err, res) {
+    if (err) {
+        console.log(err.message);
+    }
+    console.log(res.body);
+});
+request.post({
+    url: postURL,
+    form: {
+        name: "meander",
+        graph_function: "cos(x) - cos(3*x)/3 + cos(5*x)/5 - cos(7*x)/7 + cos(9*x)/9 - cos(11*x)/11",
+        min_x: -7,
+        max_x: 7,
+        color: "red"
+    }
+}, function(err, res) {
+    if (err) {
+        console.log(err.message);
+    }
+    console.log(res.body);
+});
+request.post({
+    url: postURL,
+    form: {
+        name: "radio",
+        graph_function: "(cos(x)+5)*cos(30*x)",
+        min_x: -7,
+        max_x: 7,
+        color: "red"
+    }
+}, function(err, res) {
+    if (err) {
+        console.log(err.message);
+    }
+    console.log(res.body);
+});
+request.post({
+    url: postURL,
+    form: {
+        name: "FM signal",
+        graph_function: "cos(5*(5+sin(x))*x)",
+        min_x: -7,
+        max_x: 7,
+        color: "red"
+    }
+}, function(err, res) {
+    if (err) {
+        console.log(err.message);
+    }
+    console.log(res.body);
+});
+request.post({
+    url: postURL,
+    form: {
+        name: "Computed Expression",
+        graph_function: "(x < -0.1 || x > 0.1)? (1/x) : NaN",
+        min_x: -7,
+        max_x: 7,
+        color: "red"
+    }
+}, function(err, res) {
+    if (err) {
+        console.log(err.message);
+    }
+    console.log(res.body);
+});
+request.post({
+    url: postURL,
+    form: {
+        name: "Ln",
+        graph_function: "x>0.001?log(x):NaN",
+        min_x: -7,
+        max_x: 7,
+        color: "red"
+    }
+}, function(err, res) {
+    if (err) {
+        console.log(err.message);
+    }
+    console.log(res.body);
+});
+
+
+
 
 /**/
 /*
